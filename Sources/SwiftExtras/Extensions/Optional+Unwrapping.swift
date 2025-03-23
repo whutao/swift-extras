@@ -15,6 +15,7 @@ extension Optional {
     /// print(optionalString ?? "Default string")
     /// ```
     @inlinable
+    @inline(__always)
     public func unwrapped(or defaultValue: Wrapped) -> Wrapped {
         if let wrapped = self {
             return wrapped
@@ -39,6 +40,7 @@ extension Optional {
     /// print(optionalString!)
     /// ```
     @inlinable
+    @inline(__always)
     public func forceUnwrapped(because assumption: String) -> Wrapped {
         if let wrapped = self {
             return wrapped
@@ -49,6 +51,7 @@ extension Optional {
     
     /// Returns a wrapped value if an optional can be unwrapped. Otherwise, throw an `error`.
     @inlinable
+    @inline(__always)
     public func unwrapped(or error: Error) throws -> Wrapped {
         if let wrapped = self {
             return wrapped

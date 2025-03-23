@@ -1,6 +1,9 @@
 extension String {
     
     /// Empty string aka `""`.
+    @inlinable
     @inline(__always)
-    public static let empty: String = ""
+    public static var empty: String {
+        return ""
+    }
 }

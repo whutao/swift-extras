@@ -4,6 +4,7 @@ extension RandomAccessCollection {
     ///
     /// If the index is within the collection's bounds, it returns the element at that index; otherwise,
     /// it returns `nil`. This prevents out-of-bounds runtime errors when accessing elements.
+    @inlinable
     public subscript(safe index: Index) -> Element? {
         get {
             guard indices.contains(index) else {

@@ -14,6 +14,7 @@ extension Optional {
     ///
     /// print(optionalString == nil)
     /// ```
+    @inlinable
     @inline(__always)
     public var isNil: Bool {
         return self == nil
@@ -33,6 +34,7 @@ extension Optional {
     ///
     /// print(optionalString != nil)
     /// ```
+    @inlinable
     @inline(__always)
     public var isNotNil: Bool {
         return self != nil

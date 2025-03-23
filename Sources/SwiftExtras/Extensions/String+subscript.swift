@@ -1,6 +1,7 @@
 extension String {
     
     /// Used to access and modify a character in the string.
+    @inlinable
     public subscript(_ i: Int) -> Character {
         get {
             return self[index(startIndex, offsetBy: i)]
@@ -12,6 +13,7 @@ extension String {
     }
     
     /// Used to access and modify a substring in the string.
+    @inlinable
     public subscript(_ range: CountableRange<Int>) -> String {
         get {
             let start = index(startIndex, offsetBy: range.lowerBound)
