@@ -9,6 +9,39 @@
 This package extends the functionality of the Swift standard library by
 providing convenient methods and properties.
 
+## Examples
+
+Provide a default value or check for nil easily:
+```swift
+let optionalText: String? = nil
+
+if optionalText.isNil {
+    print("The text is nil.")
+}
+
+let text = optionalText.unwrapped(or: "Default text")
+print("Text:", text)
+```
+
+Access elements safely:
+```swift
+let letters = ["A", "B", "C"]
+if let letter = letters[safe: 2] {
+    print("Letter:", letter)
+} else {
+    print("Index out of bounds")
+}
+```
+
+Leverage key path operators to work with collections:
+```swift
+let names = ["John", "Alexander", "Bob", "Christopher"]
+
+let shortNames = names.filter(\.count < 5)
+let containsJohn = names.contains(where: \.self == "John")
+
+```
+
 ## Installation
 
 You can add the library to an Xcode project by adding it as a package dependency.
