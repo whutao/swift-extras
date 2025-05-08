@@ -24,6 +24,10 @@ extension Either: Encodable where Left: Encodable, Right: Encodable {
     
 }
 
+extension Either: Error where Left: Error, Right: Error {
+    
+}
+
 extension Either: Equatable where Left: Equatable, Right: Equatable {
     
 }
