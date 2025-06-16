@@ -1,4 +1,4 @@
-extension RandomAccessCollection {
+extension Collection {
     
     /// The `safe` subscript allows accessing an element at a given index safely by returning an optional.
     ///
