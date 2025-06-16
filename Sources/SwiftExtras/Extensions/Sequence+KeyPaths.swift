@@ -27,17 +27,25 @@ extension Sequence {
     
     /// Returns the elements of the sequence, sorted in the increasing order using the given keypath.
     @inlinable
-    public func sorted<Value: Comparable>(by keyPath: KeyPath<Element, Value>) -> [Element] {
-        return sorted(by: keyPath, using: <)
+    public func sorted<Value: Comparable>(
+        by keyPath: KeyPath<Element, Value>,
+        ascending: Bool = true
+    ) -> [Element] {
+        return sorted(by: keyPath) { lhs, rhs in
+            return ascending ? lhs < rhs : lhs > rhs
+        }
     }
     
     /// Returns the elements of the sequence, sorted in the increasing order using the given keypath.
     @inlinable
-    public func sorted<Value: Comparable>(by keyPath: KeyPath<Element, Value?>) -> [Element] {
+    public func sorted<Value: Comparable>(
+        by keyPath: KeyPath<Element, Value?>,
+        ascending: Bool = true
+    ) -> [Element] {
         return sorted(by: keyPath) { lhs, rhs in
-            guard let lhs else { return true }
-            guard let rhs else { return false }
-            return lhs < rhs
+            guard let lhs else { return ascending }
+            guard let rhs else { return !ascending }
+            return ascending ? lhs < rhs : lhs > rhs
         }
     }
     
@@ -45,9 +53,12 @@ extension Sequence {
     @inlinable
     public func sorted<Value: Comparable>(
         by keyPath1: KeyPath<Element, Value>,
-        and keyPath2: KeyPath<Element, Value>
+        and keyPath2: KeyPath<Element, Value>,
+        ascending: Bool = true
     ) -> [Element] {
-        return sorted(by: keyPath1, and: keyPath2, using: <)
+        return sorted(by: keyPath1, and: keyPath2) { lhs, rhs in
+            return ascending ? lhs < rhs : lhs > rhs
+        }
     }
     
     /// Returns the elements of the sequence, sorted using the given predicate as the comparison between elements and the keypath.
