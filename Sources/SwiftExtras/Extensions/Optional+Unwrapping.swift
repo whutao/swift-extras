@@ -39,11 +39,15 @@ extension Optional {
     /// print(optionalString!)
     /// ```
     @inlinable
-    public func unsafelyUnwrapped(because assumption: @autoclosure () -> String) -> Wrapped {
+    public func unsafelyUnwrapped(
+        because assumption: @autoclosure () -> String,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) -> Wrapped {
         if let wrapped = self {
             return wrapped
         } else {
-            fatalError("Unexpectedly found nil. Failed assumption: \(assumption()).")
+            fatalError("Unexpectedly found nil. Assumption failed: \(assumption()).", file: file, line: line)
         }
     }
     
