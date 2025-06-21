@@ -11,6 +11,8 @@ providing convenient methods and properties.
 
 ## Examples
 
+### Optionals
+
 Provide a default value or check for nil easily:
 ```swift
 let optionalText: String? = nil
@@ -23,6 +25,8 @@ let text = optionalText.unwrapped(or: "Default text")
 print("Text:", text)
 ```
 
+### Safe Collection Access
+
 Access elements safely:
 ```swift
 let letters = ["A", "B", "C"]
@@ -33,6 +37,8 @@ if let letter = letters[safe: 2] {
 }
 ```
 
+### Key Path Operators
+
 Leverage key path operators to work with collections:
 ```swift
 let names = ["John", "Alexander", "Bob", "Christopher"]
@@ -40,6 +46,43 @@ let names = ["John", "Alexander", "Bob", "Christopher"]
 let shortNames = names.filter(\.count < 5)
 let containsJohn = names.contains(where: \.self == "John")
 ```
+
+### Numeric Extensions
+
+Check if a number is even or odd:
+```swift
+let number = 42
+print(number.isEven) // true
+print(number.isOdd)  // false
+```
+
+### Either Type
+
+`Either` is a generic enum that can hold a value of one of two possible types.
+It is useful for representing any other dual-type scenario.
+
+```swift
+let value: Either<String, Int> = .left("Hello")
+
+switch value {
+case .left(let string):
+    print("String value: \(string)")
+case .right(let int):
+    print("Int value: \(int)")
+}
+```
+
+You can use helper properties and methods:
+```swift
+if value.isLeft {
+    // Handle left case
+}
+
+let mapped = value.mapRight { $0 * 2 }
+```
+
+`Either` conforms to `Equatable`, `Hashable`, `Codable`, `Sendable`,
+and more when its generic parameters do.
 
 ## Installation
 
