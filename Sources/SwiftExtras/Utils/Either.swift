@@ -2,12 +2,14 @@
 @frozen
 public enum Either<Left: ~Copyable, Right: ~Copyable>: ~Copyable {
     
+    /// Holds a value of type `Left`.
     case left(Left)
     
+    /// Holds a value of type `Right`.
     case right(Right)
 }
 
-// MARK: Conformances
+// MARK: - Conformances
 
 extension Either: BitwiseCopyable where Left: BitwiseCopyable, Right: BitwiseCopyable {
     
@@ -41,7 +43,7 @@ extension Either: Sendable where Left: Sendable, Right: Sendable {
     
 }
 
-// MARK: Properties for ~Copyable
+// MARK: - Properties for ~Copyable
 
 extension Either where Left: ~Copyable, Right: ~Copyable {
     
@@ -70,7 +72,7 @@ extension Either where Left: ~Copyable, Right: ~Copyable {
     }
 }
 
-// MARK: Properties for Copyable
+// MARK: - Properties for Copyable
 
 extension Either where Left: Copyable, Right: Copyable {
     
@@ -95,7 +97,7 @@ extension Either where Left: Copyable, Right: Copyable {
     }
 }
 
-// MARK: Fold for ~Copyable
+// MARK: - Fold for ~Copyable
 
 extension Either where Left: ~Copyable, Right: ~Copyable {
     
@@ -113,7 +115,7 @@ extension Either where Left: ~Copyable, Right: ~Copyable {
     }
 }
 
-// MARK: Fold for Copyable
+// MARK: - Fold for Copyable
 
 extension Either where Left: Copyable, Right: Copyable {
     
@@ -131,7 +133,7 @@ extension Either where Left: Copyable, Right: Copyable {
     }
 }
 
-// MARK: Map for ~Copyable
+// MARK: - Map for ~Copyable
 
 extension Either where Left: ~Copyable, Right: ~Copyable {
     
@@ -184,7 +186,7 @@ extension Either where Left: ~Copyable, Right: ~Copyable {
     }
 }
 
-// MARK: Map for Copyable
+// MARK: - Map for Copyable
 
 extension Either where Left: Copyable, Right: Copyable {
     

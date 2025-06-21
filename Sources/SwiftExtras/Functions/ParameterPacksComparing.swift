@@ -17,7 +17,6 @@ public func == <each Element: Equatable>(lhs: (repeat each Element), rhs: (repea
     return true
 }
 
-
 /// Returns `true` if any corresponding element in the two tuples differs.
 ///
 /// - Parameters:
