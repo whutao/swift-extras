@@ -136,37 +136,39 @@ extension Either where Left: Copyable, Right: Copyable {
 // MARK: - Map for ~Copyable
 
 extension Either where Left: ~Copyable, Right: ~Copyable {
-    
-    /// Transforms the `Left` value using the given closure.
+    /// Transforms the `Left` value using the given throwing closure.
     @inlinable
-    public consuming func mapLeft<NewLeft>(_ transform: (borrowing Left) -> NewLeft) -> Either<NewLeft, Right> {
+    public consuming func mapLeft<NewLeft, E: Error>(
+        _ transform: (borrowing Left) throws(E) -> NewLeft
+    ) throws(E) -> Either<NewLeft, Right> {
         switch consume self {
         case let .left(value):
-            return .left(transform(value))
+            return try .left(transform(value))
         case let .right(value):
             return .right(value)
         }
     }
-    
-    /// Transforms the `Right` value using the given closure.
+    /// Transforms the `Right` value using the given throwing closure.
     @inlinable
-    public consuming func mapRight<NewRight>(_ transform: (borrowing Right) -> NewRight) -> Either<Left, NewRight> {
+    public consuming func mapRight<NewRight, E: Error>(
+        _ transform: (borrowing Right) throws(E) -> NewRight
+    ) throws(E) -> Either<Left, NewRight> {
         switch consume self {
         case let .left(value):
             return .left(value)
         case let .right(value):
-            return .right(transform(value))
+            return try .right(transform(value))
         }
     }
     
     /// Transforms the `Left` value into a new `Either` using the given closure.
     @inlinable
-    public consuming func flatMapLeft<NewLeft>(
-        _ transform: (borrowing Left) -> Either<NewLeft, Right>
-    ) -> Either<NewLeft, Right> {
+    public consuming func flatMapLeft<NewLeft, E: Error>(
+        _ transform: (borrowing Left) throws(E) -> Either<NewLeft, Right>
+    ) throws(E) -> Either<NewLeft, Right> {
         switch consume self {
         case let .left(value):
-            return transform(value)
+            return try transform(value)
         case let .right(value):
             return .right(value)
         }
@@ -174,14 +176,14 @@ extension Either where Left: ~Copyable, Right: ~Copyable {
     
     /// Transforms the `Right` value into a new `Either` using the given closure.
     @inlinable
-    public consuming func flatMapRight<NewRight>(
-        _ transform: (borrowing Right) -> Either<Left, NewRight>
-    ) -> Either<Left, NewRight> {
+    public consuming func flatMapRight<NewRight, E: Error>(
+        _ transform: (borrowing Right) throws(E) -> Either<Left, NewRight>
+    ) throws(E) -> Either<Left, NewRight> {
         switch consume self {
         case let .left(value):
             return .left(value)
         case let .right(value):
-            return transform(value)
+            return try transform(value)
         }
     }
 }
@@ -190,36 +192,39 @@ extension Either where Left: ~Copyable, Right: ~Copyable {
 
 extension Either where Left: Copyable, Right: Copyable {
     
-    /// Transforms the `Left` value using the given closure.
+    /// Transforms the `Left` value using the given throwing closure.
     @inlinable
-    public consuming func mapLeft<NewLeft>(_ transform: (Left) -> NewLeft) -> Either<NewLeft, Right> {
+    public func mapLeft<NewLeft, E: Error>(
+        _ transform: (Left) throws(E) -> NewLeft
+    ) throws(E) -> Either<NewLeft, Right> {
         switch self {
         case let .left(value):
-            return .left(transform(value))
+            return try .left(transform(value))
         case let .right(value):
             return .right(value)
         }
     }
-    
-    /// Transforms the `Right` value using the given closure.
+    /// Transforms the `Right` value using the given throwing closure.
     @inlinable
-    public func mapRight<NewRight>(_ transform: (Right) -> NewRight) -> Either<Left, NewRight> {
+    public func mapRight<NewRight, E: Error>(
+        _ transform: (Right) throws(E) -> NewRight
+    ) throws(E) -> Either<Left, NewRight> {
         switch self {
         case let .left(value):
             return .left(value)
         case let .right(value):
-            return .right(transform(value))
+            return try .right(transform(value))
         }
     }
     
     /// Transforms the `Left` value into a new `Either` using the given closure.
     @inlinable
-    public func flatMapLeft<NewLeft>(
-        _ transform: (borrowing Left) -> Either<NewLeft, Right>
-    ) -> Either<NewLeft, Right> {
+    public func flatMapLeft<NewLeft, E: Error>(
+        _ transform: (borrowing Left) throws(E) -> Either<NewLeft, Right>
+    ) throws(E) -> Either<NewLeft, Right> {
         switch self {
         case let .left(value):
-            return transform(value)
+            return try transform(value)
         case let .right(value):
             return .right(value)
         }
@@ -227,14 +232,14 @@ extension Either where Left: Copyable, Right: Copyable {
     
     /// Transforms the `Right` value into a new `Either` using the given closure.
     @inlinable
-    public func flatMapRight<NewRight>(
-        _ transform: (borrowing Right) -> Either<Left, NewRight>
-    ) -> Either<Left, NewRight> {
+    public func flatMapRight<NewRight, E: Error>(
+        _ transform: (borrowing Right) throws(E) -> Either<Left, NewRight>
+    ) throws(E) -> Either<Left, NewRight> {
         switch self {
         case let .left(value):
             return .left(value)
         case let .right(value):
-            return transform(value)
+            return try transform(value)
         }
     }
 }
