@@ -1,4 +1,4 @@
-// MARK: Mix&Max
+// MARK: - Mix&Max
 
 extension Sequence {
     
@@ -21,7 +21,7 @@ extension Sequence {
     }
 }
 
-// MARK: Sorting
+// MARK: - Sorting
 
 extension Sequence {
     
