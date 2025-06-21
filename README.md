@@ -6,14 +6,20 @@
 
 # SwiftExtras
 
-This package extends the functionality of the Swift standard library by
-providing convenient methods and properties.
+This package is a collection of extensions and utility types that enhance the Swift standard library.
+
+## Features
+
+- Handy extensions for `Optional`, `Collection`, `String`, `BinaryInteger`, and more.
+- Safe collection access and expressive unwrapping.
+- Key path operators for concise predicates and sorting.
+- Utility types: `Either`, `Pair`, `Box`, `Weak`.
 
 ## Examples
 
 ### Optionals
 
-Provide a default value or check for nil easily:
+Provide a default value, check for nil, or unwrap safely:
 ```swift
 let optionalText: String? = nil
 
@@ -23,6 +29,9 @@ if optionalText.isNil {
 
 let text = optionalText.unwrapped(or: "Default text")
 print("Text:", text)
+
+let empty: String? = ""
+print(empty.isNilOrEmpty) // true
 ```
 
 ### Safe Collection Access
@@ -37,9 +46,9 @@ if let letter = letters[safe: 2] {
 }
 ```
 
-### Key Path Operators
+### Key Path Operators & Predicates
 
-Leverage key path operators to work with collections:
+Leverage key path operators for expressive filtering and sorting:
 ```swift
 let names = ["John", "Alexander", "Bob", "Christopher"]
 
@@ -49,17 +58,18 @@ let containsJohn = names.contains(where: \.self == "John")
 
 ### Numeric Extensions
 
-Check if a number is even or odd:
+Check if a number is even, odd, positive, or negative:
 ```swift
 let number = 42
-print(number.isEven) // true
-print(number.isOdd)  // false
+print(number.isEven)      // true
+print(number.isOdd)       // false
+print(number.isPositive)  // true
+print(number.isNegative)  // false
 ```
 
 ### Either Type
 
-`Either` is a generic enum that can hold a value of one of two possible types.
-It is useful for representing any other dual-type scenario.
+`Either` is a generic enum that can hold a value of one of two possible types. Useful for representing dual-type results, error handling, or branching logic.
 
 ```swift
 let value: Either<String, Int> = .left("Hello")
@@ -70,19 +80,44 @@ case .left(let string):
 case .right(let int):
     print("Int value: \(int)")
 }
-```
 
-You can use helper properties and methods:
-```swift
 if value.isLeft {
     // Handle left case
 }
 
-let mapped = value.mapRight { $0 * 2 }
+let mapped = try? value.mapRight { $0 * 2 }
 ```
 
-`Either` conforms to `Equatable`, `Hashable`, `Codable`, `Sendable`,
-and more when its generic parameters do.
+`Either` conforms to `Equatable`, `Hashable`, `Codable`, `Sendable`, and more when its generic parameters do.
+
+### Pair Type
+
+`Pair` is a tuple-like struct that holds two values, possibly of different types.
+It supports mapping and protocol conformances.
+```swift
+let pair = Pair(first: "A", second: 1)
+let newPair = try? pair.mapSecond { $0 + 1 } // Pair(first: "A", second: 2)
+```
+
+### Weak References
+
+Store weak references to class instances, useful for observer lists or delegate patterns:
+```swift
+class Observer {
+    ...
+}
+let observer = Observer()
+let weakObserver = Weak(observer)
+print(weakObserver.value != nil) // true
+```
+
+### Box Type
+
+Wrap a value type in a reference type:
+```swift
+let box = Box(42)
+print(box.value) // 42
+```
 
 ## Installation
 
@@ -92,12 +127,11 @@ You can add the library to an Xcode project by adding it as a package dependency
 
 If you want to use the library in a [SwiftPM](https://swift.org/package-manager/) project,
 it's as simple as adding it to a `dependencies` clause in your `Package.swift`:
-
-``` swift
+```swift
 dependencies: [
     .package(
         url: "https://github.com/whutao/swift-extras", 
-        from: Version(1, 0, 0)
+        from: Version(2, 0, 0)
     )
 ]
 ```
