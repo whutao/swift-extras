@@ -36,19 +36,6 @@ extension Sequence {
         }
     }
     
-    /// Returns the elements of the sequence, sorted in the increasing order using the given keypath.
-    @inlinable
-    public func sorted<Value: Comparable>(
-        by keyPath: KeyPath<Element, Value?>,
-        ascending: Bool = true
-    ) -> [Element] {
-        return sorted(by: keyPath) { lhs, rhs in
-            guard let lhs else { return ascending }
-            guard let rhs else { return !ascending }
-            return ascending ? lhs < rhs : lhs > rhs
-        }
-    }
-    
     /// Returns the elements of the sequence, sorted using the given predicate as the comparison between elements and the keypath.
     @inlinable
     public func sorted<Value>(
