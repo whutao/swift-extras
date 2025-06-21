@@ -1,3 +1,4 @@
+#if canImport(Foundation)
 import Foundation
 
 extension String {
@@ -20,3 +21,4 @@ extension String {
         return unicodeScalars.allSatisfy(characterSet.contains(_:))
     }
 }
+#endif

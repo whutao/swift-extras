@@ -1,3 +1,4 @@
+#if canImport(Foundation)
 import Foundation
 
 // MARK: String
@@ -23,6 +24,7 @@ extension Optional where Wrapped == String {
         return flatMap(\.isEmpty).unwrapped(or: true)
     }
 }
+#endif
 
 // MARK: Collection
 
